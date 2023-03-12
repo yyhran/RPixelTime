@@ -11,9 +11,9 @@ namespace pixel
 class PixelDHT : public App
 {
 public:
-    PixelDHT(MatrixPtr matrix, uint8_t pin, uint8_t type)
+    PixelDHT(MatrixPtr matrix)
     : App(matrix)
-    , _dht(pin, type)
+    , _dht(DHT_PIN, DHT_TYPE)
     , _innerMode(false)
     , _innerTime(0)
     {
@@ -59,9 +59,10 @@ private:
             temperature = _dht.convertFtoC(temperature);
             Serial.println("Temperature: " + String(temperature) + " *C");
             tools::showTempPattern(_matrix);
-            tools::showBitNumber(_matrix, String((int)temperature), 3, 5, 13, 2, _matrix->Color(147, 112, 219));
-            tools::showPercentage(_matrix, 23, 0, _matrix->Color(147, 112, 219));
-            _matrix->show();
+            
+            tools::showBitNumber(_matrix, String(static_cast<int>(temperature)), 3, 5,
+                                 13, 2, GlobalVar::colorPalette[GlobalVar::colorIndex]);
+            tools::showPercentage(_matrix, 23, 0, GlobalVar::colorPalette[GlobalVar::colorIndex]);
         }
     }
 
@@ -79,8 +80,9 @@ private:
 
             Serial.println("Humidity: " + String(humidity) + " %");
             tools::showTempPattern(_matrix);
-            tools::showBitNumber(_matrix, String((int)humidity), 3, 5, 13, 2, _matrix->Color(147, 112, 219));
-            tools::showHumidity(_matrix, 23, 0, _matrix->Color(147, 112, 219));
+            tools::showBitNumber(_matrix, String(static_cast<int>(humidity)), 3, 5,
+                                 13, 2, GlobalVar::colorPalette[GlobalVar::colorIndex]);
+            tools::showHumidity(_matrix, 23, 0, GlobalVar::colorPalette[GlobalVar::colorIndex]);
         }
     }
 

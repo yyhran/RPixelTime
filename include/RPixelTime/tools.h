@@ -39,12 +39,12 @@ void showColon(MatrixPtr matrix, int xPos, int yPos, bool l, uint16_t colorxy)
             }
             else
             {
-                matrix->drawPixel(xPos, j, matrix->Color(0, 0, 0));
+                matrix->drawPixel(xPos, j, MCOLOR(0, 0, 0));
             }
         }
         else
         {
-            matrix->drawPixel(xPos, j, matrix->Color(0, 0, 0));
+            matrix->drawPixel(xPos, j, MCOLOR(0, 0, 0));
         }
     }
 }
@@ -71,7 +71,7 @@ void showBitMap(MatrixPtr matrix, String bitStr, int xLength, int yLength,
             }
             else
             {
-                matrix->drawPixel(i, j, matrix->Color(0, 0, 0));
+                matrix->drawPixel(i, j, MCOLOR(0, 0, 0));
             }
         }
     }
@@ -100,34 +100,31 @@ void showBitNumber(MatrixPtr matrix, String number, int xLength, int yLength,
     }
 }
 
-void showWeek(MatrixPtr matrix, int xPos, int yPos, uint16_t colorxy)
+void showWeekDay(MatrixPtr matrix, int day, int xPos, int yPos, uint16_t colorw, uint16_t colorwd)
 {
     for(int i = 0; i < 7; i++)
     {
-        drawXLine(matrix, xPos + i * 4, yPos, 3, colorxy);
+        drawXLine(matrix, xPos + i * 4, yPos, 3, colorw);
     }
-}
 
-void showWeekDay(MatrixPtr matrix, int day, int xPos, int yPos, uint16_t colorxy)
-{
     if(day == 0)
     {
         day = 7;
     }
-    drawXLine(matrix, xPos + 4 * (day - 1), yPos, 3, colorxy);
+    drawXLine(matrix, xPos + 4 * (day - 1), yPos, 3, colorwd);
 }
 
 void showTempPattern(MatrixPtr matrix)
 {
-    drawYLine(matrix, 1, 4, 3, matrix->Color(255, 255, 255));
-    drawYLine(matrix, 2, 0, 8, matrix->Color(255, 255, 255));
-    drawYLine(matrix, 3, 0, 8, matrix->Color(255, 255, 255));
-    drawYLine(matrix, 4, 0, 8, matrix->Color(255, 255, 255));
-    drawYLine(matrix, 5, 4, 3, matrix->Color(255, 255, 255));
+    drawYLine(matrix, 1, 4, 3, MCOLOR(255, 255, 255));
+    drawYLine(matrix, 2, 0, 8, MCOLOR(255, 255, 255));
+    drawYLine(matrix, 3, 0, 8, MCOLOR(255, 255, 255));
+    drawYLine(matrix, 4, 0, 8, MCOLOR(255, 255, 255));
+    drawYLine(matrix, 5, 4, 3, MCOLOR(255, 255, 255));
 
-    drawYLine(matrix, 2, 5, 2, matrix->Color(255, 48, 48));
-    drawYLine(matrix, 3, 1, 6, matrix->Color(255, 48, 48));
-    drawYLine(matrix, 4, 5, 2, matrix->Color(255, 48, 48));
+    drawYLine(matrix, 2, 5, 2, MCOLOR(255, 48, 48));
+    drawYLine(matrix, 3, 1, 6, MCOLOR(255, 48, 48));
+    drawYLine(matrix, 4, 5, 2, MCOLOR(255, 48, 48));
 }
 
 void showHumidity(MatrixPtr matrix, int xPos, int yPos, uint16_t colorxy)

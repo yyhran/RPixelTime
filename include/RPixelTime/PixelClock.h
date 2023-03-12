@@ -34,14 +34,14 @@ public:
             {
                 GlobalVar::lastTime = millis();
             }
-            tools::showBitNumber(_matrix, hour, 3, 5, 2, 1, _matrix->Color(130, 20, 121));
-            tools::showColon(_matrix, 10, 2, true, _matrix->Color(30, 120, 221));
-            tools::showBitNumber(_matrix, minute, 3, 5, 12, 1, _matrix->Color(130, 20, 121));
-            tools::showColon(_matrix, 20, 2, true, _matrix->Color(30, 120, 221));
-            tools::showBitNumber(_matrix, second, 3, 5, 22, 1, _matrix->Color(130, 20, 121));
+            // MCOLOR(130, 20, 121)
+            tools::showBitNumber(_matrix, hour, 3, 5, 2, 1, GlobalVar::colorPalette[GlobalVar::colorIndex]);
+            tools::showColon(_matrix, 10, 2, true, MCOLOR(30, 120, 221));
+            tools::showBitNumber(_matrix, minute, 3, 5, 12, 1, GlobalVar::colorPalette[GlobalVar::colorIndex]);
+            tools::showColon(_matrix, 20, 2, true, MCOLOR(30, 120, 221));
+            tools::showBitNumber(_matrix, second, 3, 5, 22, 1, GlobalVar::colorPalette[GlobalVar::colorIndex]);
 
-            tools::showWeek(_matrix, 2, 7, _matrix->Color(30, 30, 230));
-            tools::showWeekDay(_matrix, day, 2, 7, _matrix->Color(230, 30, 30));
+            tools::showWeekDay(_matrix, day, 2, 7, MCOLOR(30, 30, 230), MCOLOR(230, 30, 30));
         }
     };
 

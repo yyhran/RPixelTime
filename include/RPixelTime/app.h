@@ -104,18 +104,4 @@ private:
     int _mode = 0;
 };
 
-
-class GlobalVar
-{
-    GlobalVar() = delete;
-    GlobalVar(const GlobalVar&) = delete;
-    GlobalVar& operator=(const GlobalVar&) = delete;
-
-public:
-    using MatrixPtr = std::shared_ptr<Adafruit_NeoMatrix>;
-
-    static uint32_t lastTime;
-};
-uint32_t GlobalVar::lastTime = 0;
-
 } // namespace pixel

@@ -9,8 +9,10 @@
 
 #include <vector>
 #include <memory>
+
 #include <RPixelTime/PixelClock.h>
 #include <RPixelTime/PixelDHT.h>
+#include <RPixelTime/PixelFFT.h>
 
 auto matrix = std::make_shared<Adafruit_NeoMatrix>(LED_XRES, LED_YRES, 1, 1, LED_PIN,
                                                    NEO_MATRIX_TOP + NEO_MATRIX_LEFT +
@@ -71,7 +73,8 @@ void setup()
 
   // add apps
   pixel::AppManager::getInstance().addApp(std::make_shared<pixel::PixelClock>(matrix));
-  pixel::AppManager::getInstance().addApp(std::make_shared<pixel::PixelDHT>(matrix, DHT_PIN, DHT_TYPE));
+  pixel::AppManager::getInstance().addApp(std::make_shared<pixel::PixelDHT>(matrix));
+  pixel::AppManager::getInstance().addApp(std::make_shared<pixel::PixelFFT>(matrix));
 }
 
 void loop()
