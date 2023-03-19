@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPixelTime</title>
+    <link rel="stylesheet" type="text/css" href="reset.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="jquery.min.js"></script>
+</head>
+
+<body style="background: url(background.jpg) 0% 0% / cover no-repeat fixed;">
+    <nav class="nav">
+        <li><a href="/index">Hmoe</a></li>
+        <li><a href="/mode">Mode</a></li>
+        <li><a href="/global">Global</a></li>
+        <li><a href="/about">About</a></li>
+    </nav>
+
+</body>
+
+<script type="text/javascript">
+    var $body = $('body')
+    
+    function fontVCenter() {
+    var hW = $body.width()
+    var $nava = $('.nav a')
+    var $title = $(".title")
+    var fontSize
+    var navheig
+    var titleheig
+
+    if(hW > 1400) {
+        fontSize = 16
+        navheig = 50
+        titleheig = 100
+    }
+    else if(hW > 700) {
+        fontSize = 16 * hW / 1400
+        navheig = 50 * hW / 1400
+        titleheig = 100 * hW / 1400
+    }
+    else {
+        fontSize = 16
+        navheig = 25
+        titleheig = 50
+    }
+
+    $body.css('font-size', fontSize + 'px')
+    $nava.css('line-height', navheig + 'px')
+    $title.css('line-height', titleheig + 'px')
+    $('footer').css('line-height', titleheig + 'px')
+    }
+    fontVCenter()
+
+    window.onresize = function() {
+        fontVCenter()
+    }
+</script>
+
+</html>

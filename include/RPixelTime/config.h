@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #define LED_XRES 32
 #define LED_YRES 8
 #define NUM_LEDS 256
@@ -24,7 +26,7 @@ class GlobalVar
     GlobalVar& operator=(const GlobalVar&) = delete;
 
 public:
-    static uint16_t colorPalette[3];
+    static std::vector<uint16_t> colorPalette;
     static uint32_t lastTime;
     static int colorIndex;
     static int displacement;
@@ -32,13 +34,17 @@ public:
     static int intensity[LED_XRES];
     static double vReal[SAMPLES];
     static double vImage[SAMPLES];
+    static String apName;
+    static String apPasswd;
 };
 
-uint16_t GlobalVar::colorPalette[3] = { MCOLOR(255, 0, 0), MCOLOR(0, 255, 0), MCOLOR(0, 0, 255) };
+std::vector<uint16_t> GlobalVar::colorPalette = { MCOLOR(255, 0, 0), MCOLOR(0, 255, 0), MCOLOR(0, 0, 255) };
 uint32_t GlobalVar::lastTime = 0;
 int GlobalVar::displacement = 1;
 int GlobalVar::colorIndex = 0;
 int GlobalVar::freqGain[] = { 40, 42, 45, 47, 51, 55, 57, 59, 62, 65, 69, 71, 73, 76, 80, 82, 80, 78, 76, 74, 72, 70, 68, 66, 64, 60, 56, 52, 50, 46, 54, 40 };
-int GlobalVar::intensity[LED_XRES] = { 0 };
+int GlobalVar::intensity[] = { 0 };
 double GlobalVar::vReal[] = { 0.0 };
 double GlobalVar::vImage[] = { 0.0 };
+String GlobalVar::apName = "wifi test";
+String GlobalVar::apPasswd = "1145141919";

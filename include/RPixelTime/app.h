@@ -17,10 +17,7 @@ public:
     void changeToApp()
     {
         _matrix->clear();
-        _matrix->show();
-
         update(true);
-
         _matrix->show();
 
     }
@@ -32,6 +29,7 @@ public:
     }
 
     virtual void update(bool) = 0;
+    virtual void changeMode(int) { }
 
 protected:
     MatrixPtr _matrix;
@@ -74,11 +72,21 @@ public:
 
     void runCurApp()
     {
+        if(_appList.empty())
+        {
+            return;
+        }
+
         _appList[_mode]->runApp();
     }
 
     void changeToApp(int mode)
     {
+        if(_appList.empty())
+        {
+            return;
+        }
+
         mode %= static_cast<int>(_appList.size());
         _mode = mode;
         Serial.println("Change mode to " + String(_mode));
