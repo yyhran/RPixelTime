@@ -13,9 +13,11 @@
 #include <vector>
 #include <memory>
 
+#include <RPixelTime/PixelWeather.h>
 #include <RPixelTime/PixelClock.h>
 #include <RPixelTime/PixelDHT.h>
 #include <RPixelTime/PixelFFT.h>
+
 
 auto matrix = std::make_shared<Adafruit_NeoMatrix>(LED_XRES, LED_YRES, 1, 1, LED_PIN,
                                                    NEO_MATRIX_TOP + NEO_MATRIX_LEFT +
@@ -29,7 +31,12 @@ const uint16_t colors[] = {
 };
 
 OneButton button(BUTTON_PIN);
+
+#if USE_ASYNC_SERVER
 AsyncWebServer server(80);
+#else
+WebServer server(80);
+#endif
 
 void changeColor()
 {
@@ -77,6 +84,7 @@ void initLocalWiFi()
   WiFi.softAP(GlobalVar::apName.c_str(), GlobalVar::apPasswd.c_str());
 }
 
+#if USE_ASYNC_SERVER
 void startWebServer()
 {
   server.serveStatic("/", SPIFFS, "/");
@@ -85,24 +93,14 @@ void startWebServer()
     request->send(SPIFFS, "/index.html", "text/html");
   });
 
-  server.on("/index", HTTP_GET, [](AsyncWebServerRequest* request){
-    request->send(SPIFFS, "/index.html", "text/html");
-  });
-
-  server.on("/mode", HTTP_GET, [](AsyncWebServerRequest* request){
-    request->send(SPIFFS, "/index.html", "text/html");
-  });
-
-  server.on("/global", HTTP_GET, [](AsyncWebServerRequest* request){
-    request->send(SPIFFS, "/index.html", "text/html");
-  });
-
-  server.on("/about", HTTP_GET, [](AsyncWebServerRequest* request){
-    request->send(SPIFFS, "/index.html", "text/html");
-  });
-
   server.begin();
 }
+#else
+void stratWebServer()
+{
+
+}
+#endif
 
 void mountFileSystem()
 {
@@ -122,6 +120,7 @@ void initButton()
 void loadApps()
 {
   pixel::AppManager::getInstance().addApp(std::make_shared<pixel::PixelClock>(matrix));
+  pixel::AppManager::getInstance().addApp(std::make_shared<pixel::PixelWeather>(matrix));
   pixel::AppManager::getInstance().addApp(std::make_shared<pixel::PixelDHT>(matrix));
   pixel::AppManager::getInstance().addApp(std::make_shared<pixel::PixelFFT>(matrix));
 }
@@ -132,18 +131,25 @@ void setup()
   delay(300);
 
   initMatrix();
+  initButton();
+
+  connectWiFi();
   initLocalWiFi();
+
   mountFileSystem();
   startWebServer(); // must after tcp_init(local WiFi or connected WiFi)
-  connectWiFi();
-  initButton();
 
   loadApps();
 }
 
+
 void loop()
 {
+  // TODO: reconnecting the WiFi when WiFi disconnected ?
   button.tick();
   pixel::AppManager::getInstance().runCurApp();
-  // TODO: reconnecting the WiFi when WiFi disconnected ?
+
+#if !USE_ASYNC_SERVER
+  server.handClient();
+#endif
 }

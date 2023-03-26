@@ -1,8 +1,11 @@
+#pragma once
+
+#include <WiFiUdp.h>
+#include <NTPClient.h>
+
 #include <RPixelTime/config.h>
 #include <RPixelTime/app.h>
 #include <RPixelTime/tools.h>
-#include <WiFiUdp.h>
-#include <NTPClient.h>
 
 
 namespace pixel

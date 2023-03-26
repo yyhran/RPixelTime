@@ -1,6 +1,8 @@
 #pragma once
+
 #include <DHT.h>
 #include <tuple>
+
 #include <Adafruit_Sensor.h>
 #include <RPixelTime/app.h>
 #include <RPixelTime/tools.h>
